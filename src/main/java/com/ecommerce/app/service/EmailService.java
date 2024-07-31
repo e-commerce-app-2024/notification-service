@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring6.SpringTemplateEngine;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -77,7 +78,7 @@ public class EmailService {
 
     private Map<String, Object> preparePaymentConfirmationModel(PaymentConfirmation paymentConfirmation) {
         Map<String, Object> model = new HashMap<>();
-        model.put("amount", paymentConfirmation.amount());
+        model.put("amount", paymentConfirmation.amount().setScale(2, BigDecimal.ROUND_HALF_UP));
         model.put("orderReference", paymentConfirmation.orderReference());
         model.put("customerName", paymentConfirmation.customerName());
         return model;
@@ -85,7 +86,7 @@ public class EmailService {
 
     private Map<String, Object> prepareOrderConfirmationModel(OrderConfirmation orderConfirmation) {
         Map<String, Object> model = new HashMap<>();
-        model.put("totalAmount", orderConfirmation.totalAmount());
+        model.put("totalAmount", orderConfirmation.totalAmount().setScale(2, BigDecimal.ROUND_HALF_UP));
         model.put("orderReference", orderConfirmation.orderReference());
         model.put("customerName", orderConfirmation.customer().firstName() + " " + orderConfirmation.customer().lastName());
         model.put("products", orderConfirmation.products());
