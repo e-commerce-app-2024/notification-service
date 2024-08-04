@@ -3,5 +3,3 @@ spring:
     import: optional:configserver:http://127.0.0.1:8888/
   application:
     name: notification-service
-server:
-  port: 7777
